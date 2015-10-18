@@ -24,7 +24,7 @@ public class Main {
         List<Host> hosts = new HostStateProcessor(pathHostState, cloudInstances).process();
 
         List<Customer> customers = new CustomerBuilder(cloudInstances).create();
-        StringBuilder results = new CloudInfrastructureOutput(customers).display();
+        StringBuilder results = new CloudInfrastructureOutput(customers, hosts).display();
 
         System.out.println("results:" + "\n");
         System.out.println(results);
