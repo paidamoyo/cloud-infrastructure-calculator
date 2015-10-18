@@ -28,7 +28,7 @@ public class CloudInfrastructureOutput {
         result.append("HostClustering:").append(maximumOfFleetPerHost.getKey().getId())
                 .append(",").append(maximumOfFleetPerHost.getValue()).append("\n");
         result.append("DatacentreClustering:").append(maximumOfFleetPerCenter.getKey().getId())
-                .append(",").append(maximumOfFleetPerCenter.getValue());
+                .append(",").append(maximumOfFleetPerCenter.getValue()).append("\n");
         result.append("AvailableHosts:");
 
         hostsWithEmptySlots.forEach(host -> result.append(host.getId()).append(","));

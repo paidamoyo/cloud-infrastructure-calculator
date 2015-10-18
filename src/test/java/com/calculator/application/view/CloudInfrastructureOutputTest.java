@@ -67,7 +67,7 @@ public class CloudInfrastructureOutputTest {
         //then
         StringBuilder expected = new StringBuilder();
         expected.append("HostClustering:").append("8").append(",").append(0.6).append("\n");
-        expected.append("DatacentreClustering:").append("13").append(",").append(1.0)
+        expected.append("DatacentreClustering:").append("13").append(",").append(1.0).append("\n")
                 .append("AvailableHosts:").append("2").append(",").append("5").append(",")
                 .append("3").append(",").append("10").append(",").append("6").append(",").append("\n");
         assertThat(display.toString(), is(expected.toString()));
