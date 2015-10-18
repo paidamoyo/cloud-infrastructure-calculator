@@ -1,0 +1,15 @@
+
+*.iml
+*.ipr
+*.iws
+*.log
+.idea/
+.gradle/
+/build
+
+
+#Eclipse ignores
+.project
+**/.classpath
+**/.settings
+**/bin

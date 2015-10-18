@@ -1,0 +1,36 @@
+
+apply plugin: 'idea'
+
+apply plugin: 'maven'
+
+apply plugin:'application'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+run {
+    if ( project.hasProperty('filePaths') ) {
+        args(filePaths.split(','))
+    }
+    mainClassName = 'com.calculator.application.Main'
+}
+
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    compile 'org.projectlombok:lombok:1.16.+'
+    compile 'com.google.guava:guava:18.0'
+}
+
+
+task installArchives(type: Upload) {
+    description "Installs the artifacts to the local Maven repository."
+    configuration = configurations['archives']
+    repositories {
+        mavenDeployer {
+            repository url: "file://${System.properties['user.home']}/.m2/repository"
+        }
+    }
+}
