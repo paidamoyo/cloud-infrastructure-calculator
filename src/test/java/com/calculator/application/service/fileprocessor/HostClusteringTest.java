@@ -38,11 +38,11 @@ public class HostClusteringTest {
         CloudInstance instanceTen = CloudInstance.from("10", "16", "5");
         CloudInstance instanceThirteen = CloudInstance.from("13", "16", "8");
 
-        Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));
-        Customer customerNine = Customer.from("9", Arrays.asList(instanceEight, instanceFourteen, instanceFifteen));
-        Customer customerThirteen = Customer.from("13", Arrays.asList(instanceSeven, instanceNine));
-        Customer customerFifteen = Customer.from("15", Arrays.asList(instanceFive, instanceEleven));
-        Customer customerSixteen = Customer.from("16", Arrays.asList(instanceSix, instanceTen, instanceThirteen));
+        Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));// 3/5
+        Customer customerNine = Customer.from("9", Arrays.asList(instanceEight, instanceFourteen, instanceFifteen));//1/3
+        Customer customerThirteen = Customer.from("13", Arrays.asList(instanceSeven, instanceNine));//1/2
+        Customer customerFifteen = Customer.from("15", Arrays.asList(instanceFive, instanceEleven)); //1/2
+        Customer customerSixteen = Customer.from("16", Arrays.asList(instanceSix, instanceTen, instanceThirteen));//1/3
 
         List<Customer> customers = Arrays.asList(customerThirteen, customerFifteen, customerSixteen, customerEight, customerNine);
         HostClustering hostClustering = new HostClustering(customers);

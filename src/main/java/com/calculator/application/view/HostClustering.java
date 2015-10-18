@@ -21,7 +21,8 @@ public class HostClustering {
 
         Map<Customer, Double> hostClustering = new HashMap<>();
 
-        this.customers.forEach(customer -> customer.getCloudInstances()
+        this.customers.forEach(customer ->
+                customer.getCloudInstances()
                 .stream()
                 .collect(Collectors.groupingBy(CloudInstance::getHostId))
                 .entrySet()
