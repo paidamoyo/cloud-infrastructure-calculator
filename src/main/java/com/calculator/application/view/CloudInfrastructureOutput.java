@@ -6,15 +6,16 @@ import java.util.Map;
 import com.calculator.domain.Customer;
 import com.calculator.domain.Host;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 
 public class CloudInfrastructureOutput {
 
-    private List<Customer> customers;
-    private List<Host> hosts;
+    private ImmutableList<Customer> customers;
+    private ImmutableList<Host> hosts;
 
     public CloudInfrastructureOutput(List<Customer> customers, List<Host> hosts) {
-        this.customers = customers;
-        this.hosts = hosts;
+        this.customers = ImmutableList.copyOf(customers);
+        this.hosts = ImmutableList.copyOf(hosts);
     }
 
 

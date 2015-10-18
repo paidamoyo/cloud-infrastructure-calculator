@@ -3,10 +3,10 @@ package com.calculator.application.service.fileprocessor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 import com.calculator.domain.CloudInstance;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 
 public class CloudInstanceStateProcessor implements FileProcessorBase {
 
@@ -20,11 +20,11 @@ public class CloudInstanceStateProcessor implements FileProcessorBase {
     }
 
     @Override
-    public List<CloudInstance> process() {
+    public ImmutableList<CloudInstance> process() {
         return getCloudInstances();
     }
 
-    private List<CloudInstance> getCloudInstances() {
+    private ImmutableList<CloudInstance> getCloudInstances() {
         try {
             return FluentIterable.from(Files.readAllLines(this.path))
                     .transform(this::createCloudInstance)

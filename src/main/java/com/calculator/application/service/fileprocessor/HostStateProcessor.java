@@ -5,9 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import com.calculator.domain.Host;
 import com.calculator.domain.CloudInstance;
+import com.calculator.domain.Host;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 
 public class HostStateProcessor implements FileProcessorBase {
 
@@ -23,11 +24,11 @@ public class HostStateProcessor implements FileProcessorBase {
     }
 
     @Override
-    public List<Host> process() {
+    public ImmutableList<Host> process() {
         return getCloudHosts();
     }
 
-    private List<Host> getCloudHosts() {
+    private ImmutableList<Host> getCloudHosts() {
         try {
             return FluentIterable.from(Files.readAllLines(this.path))
                     .transform(line -> createCloudHost(line, this.cloudInstances))

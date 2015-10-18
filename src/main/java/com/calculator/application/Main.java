@@ -2,15 +2,15 @@ package com.calculator.application;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
-import com.calculator.application.service.fileprocessor.CloudInstanceStateProcessor;
 import com.calculator.application.service.CustomerBuilder;
+import com.calculator.application.service.fileprocessor.CloudInstanceStateProcessor;
 import com.calculator.application.service.fileprocessor.HostStateProcessor;
 import com.calculator.application.view.CloudInfrastructureOutput;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 import com.calculator.domain.Host;
+import com.google.common.collect.ImmutableList;
 
 public class Main {
 
@@ -20,10 +20,10 @@ public class Main {
         Path pathInstanceState = Paths.get(args[0]);
         Path pathHostState = Paths.get(args[1]);
 
-        List<CloudInstance> cloudInstances = new CloudInstanceStateProcessor(pathInstanceState).process();
-        List<Host> hosts = new HostStateProcessor(pathHostState, cloudInstances).process();
+        ImmutableList<CloudInstance> cloudInstances = new CloudInstanceStateProcessor(pathInstanceState).process();
+        ImmutableList<Host> hosts = new HostStateProcessor(pathHostState, cloudInstances).process();
 
-        List<Customer> customers = new CustomerBuilder(cloudInstances).create();
+        ImmutableList<Customer> customers = new CustomerBuilder(cloudInstances).create();
         StringBuilder results = new CloudInfrastructureOutput(customers, hosts).display();
 
         System.out.println("results:" + "\n");

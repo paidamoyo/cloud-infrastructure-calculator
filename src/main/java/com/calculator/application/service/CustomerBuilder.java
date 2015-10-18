@@ -7,17 +7,18 @@ import java.util.stream.Collectors;
 
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
+import com.google.common.collect.ImmutableList;
 
 public class CustomerBuilder {
 
-    private List<CloudInstance> cloudInstances;
+    private ImmutableList<CloudInstance> cloudInstances;
 
     public CustomerBuilder(List<CloudInstance> cloudInstances) {
 
-        this.cloudInstances = cloudInstances;
+        this.cloudInstances = ImmutableList.copyOf(cloudInstances);
     }
 
-    public List<Customer> create() {
+    public ImmutableList<Customer> create() {
         List<Customer> customers = new ArrayList<>();
         groupByCustomerId()
                 .entrySet()
@@ -29,7 +30,7 @@ public class CustomerBuilder {
                 );
 
 
-        return customers;
+        return ImmutableList.copyOf(customers);
     }
 
     private Map<String, List<CloudInstance>> groupByCustomerId() {
