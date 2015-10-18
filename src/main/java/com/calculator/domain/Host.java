@@ -18,4 +18,8 @@ public class Host {
     public static Host from(String id, int numberOfSlots, String dataCentreId, List<CloudInstance> cloudInstances) {
         return new Host(id, numberOfSlots, dataCentreId, cloudInstances);
     }
+
+    public boolean hasEmptySlot() {
+        return this.cloudInstances.size() < this.numberOfSlots;
+    }
 }
