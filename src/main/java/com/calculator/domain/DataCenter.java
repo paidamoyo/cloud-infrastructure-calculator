@@ -12,4 +12,8 @@ public class DataCenter {
 
     private final String id;
     private final List<Host> hosts;
+
+    public static DataCenter from(String id, List<Host> hosts) {
+        return new DataCenter(id, hosts);
+    }
 }
