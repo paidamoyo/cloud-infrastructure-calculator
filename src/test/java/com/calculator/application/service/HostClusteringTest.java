@@ -1,7 +1,6 @@
 package com.calculator.application.service;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,16 +47,10 @@ public class HostClusteringTest {
         HostClustering hostClustering = new HostClustering(customers);
 
         //when
-        Map<Customer, Integer> customerMaxFleetOnHost = hostClustering.customerMaximumOfFleetPerHost();
+        Map.Entry<Customer, Double> customerMaxFleetOnHost = hostClustering.customerMaximumOfFleetPerHost();
 
         //then
-        Map<Customer, Integer> expected = new HashMap<>();
-        expected.put(customerEight, 3);
-        expected.put(customerNine, 1);
-        expected.put(customerThirteen, 1);
-        expected.put(customerFifteen, 1);
-        expected.put(customerSixteen, 1);
-
-        assertThat(customerMaxFleetOnHost, is(expected));
+        assertThat(customerMaxFleetOnHost.getKey(), is(customerEight));
+        assertThat(customerMaxFleetOnHost.getValue(), is(0.6));
     }
 }

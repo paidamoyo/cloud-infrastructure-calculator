@@ -17,29 +17,39 @@ public class HostClustering {
     }
 
 
-    public Map<Customer, Integer> customerMaximumOfFleetPerHost() {
+    public Map.Entry<Customer, Double> customerMaximumOfFleetPerHost() {
 
-        Map<Customer, Integer> hostClustering = new HashMap<>();
+        Map<Customer, Double> hostClustering = new HashMap<>();
 
-        this.customers.forEach(customer -> {
-            customer.getCloudInstances()
-                    .stream()
-                    .collect(Collectors.groupingBy(CloudInstance::getHostId))
-                    .entrySet()
-                    .forEach(hostIdCloudInstancesMap -> {
-                        Integer numberOfInstancesInHost = hostIdCloudInstancesMap.getValue().size();
-                        if (hostClustering.containsKey(customer)) {
-                            Integer currentMaxInstancesInHost = hostClustering.get(customer);
-                            Integer maxInstancesInHost = numberOfInstancesInHost > currentMaxInstancesInHost ?
-                                    numberOfInstancesInHost : currentMaxInstancesInHost;
+        this.customers.forEach(customer -> customer.getCloudInstances()
+                .stream()
+                .collect(Collectors.groupingBy(CloudInstance::getHostId))
+                .entrySet()
+                .forEach(hostIdCloudInstancesMap -> {
+                    int totalCustomerCloudInstances = customer.getCloudInstances().size();
+                    Double numberOfInstancesInHost = hostIdCloudInstancesMap.getValue().size() / (double) totalCustomerCloudInstances;
+                    if (hostClustering.containsKey(customer)) {
+                        Double currentMaxInstancesInHost = hostClustering.get(customer);
+                        Double maxInstancesInHost = numberOfInstancesInHost > currentMaxInstancesInHost ?
+                                numberOfInstancesInHost : currentMaxInstancesInHost;
 
-                            hostClustering.put(customer, maxInstancesInHost);
+                        hostClustering.put(customer, maxInstancesInHost);
 
-                        } else {
-                            hostClustering.put(customer, numberOfInstancesInHost);
-                        }
-                    });
-        });
-        return hostClustering;
+                    } else {
+                        hostClustering.put(customer, numberOfInstancesInHost);
+                    }
+                }));
+
+
+        return maximum(hostClustering);
+    }
+
+    private Map.Entry<Customer, Double> maximum(Map<Customer, Double> hostClustering) {
+        return hostClustering
+                .entrySet()
+                .stream()
+                .max((entryOne, entryTwo) -> entryOne.getValue().compareTo(entryTwo.getValue()))
+                .get();
+
     }
 }
