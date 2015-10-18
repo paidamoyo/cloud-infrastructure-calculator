@@ -1,4 +1,4 @@
-package com.calculator.application.service;
+package com.calculator.application.service.fileprocessor;
 
 public class HostStateProcessorException extends RuntimeException {
     public HostStateProcessorException(String message, Exception exception) {

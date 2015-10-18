@@ -1,4 +1,4 @@
-package com.calculator.application.service;
+package com.calculator.application.service.fileprocessor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.calculator.application.view.HostClustering;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 import static org.hamcrest.MatcherAssert.assertThat;

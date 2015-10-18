@@ -4,8 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.calculator.application.service.CloudInstanceStateProcessor;
-import com.calculator.application.service.CustomerProcessor;
+import com.calculator.application.service.fileprocessor.CloudInstanceStateProcessor;
+import com.calculator.application.service.CustomerBuilder;
 import com.calculator.application.view.CloudInfrastructureOutput;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
@@ -20,7 +20,7 @@ public class Main {
 
         List<CloudInstance> cloudInstances = new CloudInstanceStateProcessor(pathInstanceState).process();
 
-        List<Customer> customers = new CustomerProcessor(cloudInstances).getCustomers();
+        List<Customer> customers = new CustomerBuilder(cloudInstances).create();
         StringBuilder results = new CloudInfrastructureOutput(customers).display();
 
         System.out.println("results:" + "\n");

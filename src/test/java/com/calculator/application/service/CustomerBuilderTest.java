@@ -10,7 +10,7 @@ import com.calculator.domain.Customer;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CustomerProcessorTest {
+public class CustomerBuilderTest {
 
     @Test
     public void shouldGetCustomersFromCloudInstances() throws Exception {
@@ -38,10 +38,10 @@ public class CustomerProcessorTest {
 
         List<CloudInstance> cloudInstances = Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceFive, instanceSix, instanceSeven, instanceEight, instanceNine, instanceTen, instanceEleven, instanceTwelve, instanceThirteen, instanceFourteen, instanceFifteen);
 
-        CustomerProcessor customerProcessor = new CustomerProcessor(cloudInstances);
+        CustomerBuilder customerBuilder = new CustomerBuilder(cloudInstances);
 
         //when
-        List<Customer> customers = customerProcessor.getCustomers();
+        List<Customer> customers = customerBuilder.create();
 
         //then
         Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));

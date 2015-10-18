@@ -8,16 +8,16 @@ import java.util.stream.Collectors;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 
-public class CustomerProcessor {
+public class CustomerBuilder {
 
     private List<CloudInstance> cloudInstances;
 
-    public CustomerProcessor(List<CloudInstance> cloudInstances) {
+    public CustomerBuilder(List<CloudInstance> cloudInstances) {
 
         this.cloudInstances = cloudInstances;
     }
 
-    public List<Customer> getCustomers() {
+    public List<Customer> create() {
         List<Customer> customers = new ArrayList<>();
         groupByCustomerId()
                 .entrySet()

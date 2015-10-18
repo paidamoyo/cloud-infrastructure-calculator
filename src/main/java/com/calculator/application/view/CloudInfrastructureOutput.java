@@ -3,7 +3,6 @@ package com.calculator.application.view;
 import java.util.List;
 import java.util.Map;
 
-import com.calculator.application.service.HostClustering;
 import com.calculator.domain.Customer;
 
 public class CloudInfrastructureOutput {
