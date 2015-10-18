@@ -12,4 +12,8 @@ public class Customer {
 
     private final String id;
     private final List<CloudInstance> cloudInstances;
+
+    public static Customer from(String id, List<CloudInstance> cloudInstances) {
+        return new Customer(id, cloudInstances);
+    }
 }

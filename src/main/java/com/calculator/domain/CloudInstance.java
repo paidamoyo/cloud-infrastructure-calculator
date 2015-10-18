@@ -15,4 +15,5 @@ public class CloudInstance {
     public static CloudInstance from(String id, String customerId, String hostId) {
         return new CloudInstance(id, customerId, hostId);
     }
+
 }

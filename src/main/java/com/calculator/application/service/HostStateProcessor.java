@@ -15,22 +15,22 @@ public class HostStateProcessor implements FileProcessorBase {
     private static final int HOST_LINE_LENGTH = 3;
 
     private Path path;
-    private InstanceStateProcessor instanceStateProcessor;
+    private List<CloudInstance> cloudInstances;
 
-    public HostStateProcessor(Path path, InstanceStateProcessor instanceStateProcessor) {
+    public HostStateProcessor(Path path, List<CloudInstance> cloudInstances) {
         this.path = path;
-        this.instanceStateProcessor = instanceStateProcessor;
+        this.cloudInstances = cloudInstances;
     }
 
     @Override
     public List<Host> process() {
-        return getCloudHosts(this.instanceStateProcessor.process());
+        return getCloudHosts();
     }
 
-    private List<Host> getCloudHosts(List<CloudInstance> cloudInstances) {
+    private List<Host> getCloudHosts() {
         try {
             return FluentIterable.from(Files.readAllLines(this.path))
-                    .transform(line -> createCloudHost(line, cloudInstances))
+                    .transform(line -> createCloudHost(line, this.cloudInstances))
                     .toList();
         } catch (IOException e) {
             String message = "error reading file: " + this.path + " ";

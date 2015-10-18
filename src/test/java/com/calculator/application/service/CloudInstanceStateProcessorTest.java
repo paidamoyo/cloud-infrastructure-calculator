@@ -12,7 +12,7 @@ import com.calculator.domain.CloudInstance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class InstanceStateProcessorTest {
+public class CloudInstanceStateProcessorTest {
 
     private Path currentDirectory;
 
@@ -28,7 +28,7 @@ public class InstanceStateProcessorTest {
         //given
         Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InstanceState.txt", currentDirectory.toString()));
 
-        InstanceStateProcessor processor = new InstanceStateProcessor(pathInstateState);
+        CloudInstanceStateProcessor processor = new CloudInstanceStateProcessor(pathInstateState);
 
         //when
         List<CloudInstance> cloudInstances = processor.process();
@@ -53,13 +53,13 @@ public class InstanceStateProcessorTest {
     }
 
 
-    @Test(expected = InstanceStateProcessorException.class)
+    @Test(expected = CloudInstanceStateProcessorException.class)
     public void shouldThrowExceptionIfFIleIsNotFormattedCorrectly() throws Exception {
 
         //given
         Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InvalidInstanceState.txt", currentDirectory.toString()));
 
-        InstanceStateProcessor processor = new InstanceStateProcessor(pathInstateState);
+        CloudInstanceStateProcessor processor = new CloudInstanceStateProcessor(pathInstateState);
 
 
         //when
@@ -68,13 +68,13 @@ public class InstanceStateProcessorTest {
         //then
     }
 
-    @Test(expected = InstanceStateProcessorException.class)
+    @Test(expected = CloudInstanceStateProcessorException.class)
     public void shouldThrowExceptionIfFIleIsNotFound() throws Exception {
 
         //given
         Path pathInstateState = Paths.get(String.format("%s/src/test/resources/NotExistingInstanceState.txt", currentDirectory.toString()));
 
-        InstanceStateProcessor processor = new InstanceStateProcessor(pathInstateState);
+        CloudInstanceStateProcessor processor = new CloudInstanceStateProcessor(pathInstateState);
 
 
         //when

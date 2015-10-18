@@ -30,15 +30,6 @@ public class HostStateProcessorTest {
         //given
         Path pathHostState = Paths.get(String.format("%s/src/test/resources/HostState.txt", currentDirectory.toString()));
 
-        Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InstanceState.txt", currentDirectory.toString()));
-        InstanceStateProcessor instanceStateProcessor = new InstanceStateProcessor(pathInstateState);
-
-        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, instanceStateProcessor);
-
-        //when
-        List<Host> hosts = hostStateProcessor.process();
-
-        //then
         CloudInstance instanceOne = CloudInstance.from("1", "8", "2");
         CloudInstance instanceTwo = CloudInstance.from("2", "8", "2");
         CloudInstance instanceThree = CloudInstance.from("3", "8", "2");
@@ -55,6 +46,14 @@ public class HostStateProcessorTest {
         CloudInstance instanceFourteen = CloudInstance.from("14", "9", "9");
         CloudInstance instanceFifteen = CloudInstance.from("15", "9", "7");
 
+        List<CloudInstance> cloudInstances = Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceFive, instanceSix, instanceSeven, instanceEight, instanceNine, instanceTen, instanceEleven, instanceTwelve, instanceThirteen, instanceFourteen, instanceFifteen);
+
+        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, cloudInstances);
+
+        //when
+        List<Host> hosts = hostStateProcessor.process();
+
+        //then
         Host hostTwo = Host.from("2", 4, "0", Arrays.asList(instanceOne, instanceTwo, instanceThree));
         Host hostFive = Host.from("5", 4, "0", Collections.singletonList(instanceTen));
         Host hostSeven = Host.from("7", 3, "0", Arrays.asList(instanceFour, instanceFive, instanceFifteen));
@@ -71,15 +70,14 @@ public class HostStateProcessorTest {
 
 
     @Test(expected = HostStateProcessorException.class)
-     public void shouldThrowExceptionIfHostStateFileIsInvalid() throws Exception {
+    public void shouldThrowExceptionIfHostStateFileIsInvalid() throws Exception {
 
         //given
         Path pathHostState = Paths.get(String.format("%s/src/test/resources/InvalidHostState.txt", currentDirectory.toString()));
 
-        Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InstanceState.txt", currentDirectory.toString()));
-        InstanceStateProcessor instanceStateProcessor = new InstanceStateProcessor(pathInstateState);
+        List<CloudInstance> cloudInstances = Collections.emptyList();
 
-        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, instanceStateProcessor);
+        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, cloudInstances);
 
         //when
         hostStateProcessor.process();
@@ -91,10 +89,9 @@ public class HostStateProcessorTest {
         //given
         Path pathHostState = Paths.get(String.format("%s/src/test/resources/HostStateNotFound.txt", currentDirectory.toString()));
 
-        Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InstanceState.txt", currentDirectory.toString()));
-        InstanceStateProcessor instanceStateProcessor = new InstanceStateProcessor(pathInstateState);
+        List<CloudInstance> cloudInstances = Collections.emptyList();
 
-        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, instanceStateProcessor);
+        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, cloudInstances);
 
         //when
         hostStateProcessor.process();
