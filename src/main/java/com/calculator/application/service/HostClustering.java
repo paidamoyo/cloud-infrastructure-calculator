@@ -41,10 +41,10 @@ public class HostClustering {
                 }));
 
 
-        return maximum(hostClustering);
+        return findCustomerWithMaximumFleetPerHost(hostClustering);
     }
 
-    private Map.Entry<Customer, Double> maximum(Map<Customer, Double> hostClustering) {
+    private Map.Entry<Customer, Double> findCustomerWithMaximumFleetPerHost(Map<Customer, Double> hostClustering) {
         return hostClustering
                 .entrySet()
                 .stream()
