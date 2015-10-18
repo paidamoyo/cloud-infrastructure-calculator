@@ -10,8 +10,8 @@ import com.google.common.collect.FluentIterable;
 
 public class InstanceStateProcessor implements FileProcessorBase {
 
-    public static final String INSTANCE_STATE_LINE_SEPARATOR = ",";
-    public static final int INSTANCE_LINE_LENGTH = 3;
+    private static final String INSTANCE_STATE_LINE_SEPARATOR = ",";
+    private static final int INSTANCE_LINE_LENGTH = 3;
     private Path path;
 
     public InstanceStateProcessor(Path path) {

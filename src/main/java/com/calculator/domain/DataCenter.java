@@ -11,5 +11,5 @@ import lombok.Value;
 public class DataCenter {
 
     private final String id;
-    private final List<CloudHost> cloudHosts;
+    private final List<Host> hosts;
 }
