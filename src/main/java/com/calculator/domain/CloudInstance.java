@@ -11,4 +11,8 @@ public class CloudInstance {
     private final String id;
     private final String customerId;
     private final String hostId;
+
+    public static CloudInstance from(String id, String customerId, String hostId) {
+        return new CloudInstance(id, customerId, hostId);
+    }
 }
