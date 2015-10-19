@@ -13,7 +13,7 @@ run {
     if (project.hasProperty('filePaths')) {
         args(filePaths.split(','))
     }
-    mainClassName = 'com.calculator.application.Main'
+    mainClassName = 'com.statistics.application.Main'
 }
 
 

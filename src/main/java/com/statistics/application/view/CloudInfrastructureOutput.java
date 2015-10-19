@@ -39,7 +39,8 @@ public class CloudInfrastructureOutput {
         hostsWithEmptySlots.forEach(host -> result.append(host.getId()).append(","));
         result.append("\n");
 
-        statisticsFileWriter.writeToFile(result.toString());
+        statisticsFileWriter.writeToFile(result);
+
         return result;
     }
 

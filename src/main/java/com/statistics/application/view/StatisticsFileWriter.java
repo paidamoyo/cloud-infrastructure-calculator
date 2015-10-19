@@ -5,9 +5,15 @@ import java.io.OutputStreamWriter;
 
 public class StatisticsFileWriter {
 
-    public void writeToFile(String content) {
+    public static final String STATISTICS_FILE_NAME = "Statistics.txt";
+
+    public void writeToFile(StringBuilder content) {
+        System.out.printf("Writing to file: %s\n%n", STATISTICS_FILE_NAME);
         try {
-            new OutputStreamWriter(new FileOutputStream("Statistics.txt"), "UTF-8").write(content);
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(STATISTICS_FILE_NAME), "UTF-8");
+            writer.append(content);
+            writer.flush();
+            writer.close();
         } catch (Exception exception) {
             String message = String.format("Error writing to statistics file for content:%s", content);
             System.out.println(message);

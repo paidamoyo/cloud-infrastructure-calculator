@@ -1,0 +1,3 @@
+HostClustering:8,0.6
+DatacentreClustering:13,1.0
+AvailableHosts:2,5,3,10,6,

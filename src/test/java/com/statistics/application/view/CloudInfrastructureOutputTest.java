@@ -15,6 +15,8 @@ import com.statistics.domain.Host;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -33,7 +35,7 @@ public class CloudInfrastructureOutputTest {
     public void shouldDisplayHostClustering() throws Exception {
 
         //given
-        Mockito.doNothing().when(statisticsFileWriter).writeToFile(any(String.class));
+        doNothing().when(statisticsFileWriter).writeToFile(any(StringBuilder.class));
 
         CloudInstance instanceOne = CloudInstance.from("1", "8", "2");
         CloudInstance instanceTwo = CloudInstance.from("2", "8", "2");
@@ -88,6 +90,6 @@ public class CloudInfrastructureOutputTest {
                 .append("AvailableHosts:").append("2").append(",").append("5").append(",")
                 .append("3").append(",").append("10").append(",").append("6").append(",").append("\n");
         assertThat(display.toString(), is(expected.toString()));
-        verify(statisticsFileWriter).writeToFile(expected.toString());
+        verify(statisticsFileWriter, times(1)).writeToFile(Mockito.any(StringBuilder.class));
     }
 }

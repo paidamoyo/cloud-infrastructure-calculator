@@ -3,7 +3,6 @@ package com.statistics.application;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.google.common.collect.ImmutableList;
 import com.statistics.application.service.CustomerBuilder;
 import com.statistics.application.service.filereader.CloudInstanceStateReader;
 import com.statistics.application.service.filereader.HostStateReader;
@@ -12,6 +11,7 @@ import com.statistics.application.view.StatisticsFileWriter;
 import com.statistics.domain.CloudInstance;
 import com.statistics.domain.Customer;
 import com.statistics.domain.Host;
+import com.google.common.collect.ImmutableList;
 
 public class Main {
 
