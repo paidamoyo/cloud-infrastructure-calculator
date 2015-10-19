@@ -1,8 +1,11 @@
 package com.statistics.application.service.statistics;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -47,10 +50,12 @@ public class HostClusteringStatisticsTest {
         HostClusteringStatistics hostClusteringStatistics = new HostClusteringStatistics(customers);
 
         //when
-        Map.Entry<Customer, Double> customerMaxFleetOnHost = hostClusteringStatistics.customerMaximumOfFleetPerHost();
+        Set<Map.Entry<Customer, Double>> customerMaxFleetOnHost = hostClusteringStatistics.customerMaximumOfFleetPerHost();
 
         //then
-        assertThat(customerMaxFleetOnHost.getKey(), is(customerEight));
-        assertThat(customerMaxFleetOnHost.getValue(), is(0.6));
+        Set<Map.Entry<Customer, Double>> expected = new HashSet<>();
+        expected.add(new AbstractMap.SimpleEntry<>(customerEight, 0.6));
+        assertThat(customerMaxFleetOnHost.size(), is(1));
+        assertThat(customerMaxFleetOnHost, is(expected));
     }
 }

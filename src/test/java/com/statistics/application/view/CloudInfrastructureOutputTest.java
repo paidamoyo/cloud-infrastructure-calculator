@@ -13,6 +13,7 @@ import com.statistics.domain.CloudInstance;
 import com.statistics.domain.Customer;
 import com.statistics.domain.Host;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -32,7 +33,7 @@ public class CloudInfrastructureOutputTest {
     }
 
     @Test
-    public void shouldDisplayHostClustering() throws Exception {
+    public void shouldDisplayCloudInfrastructureStatistics() throws Exception {
 
         //given
         doNothing().when(statisticsFileWriter).writeToFile(any(StringBuilder.class));
@@ -90,6 +91,57 @@ public class CloudInfrastructureOutputTest {
                 .append("AvailableHosts:").append("2").append(",").append("5").append(",")
                 .append("3").append(",").append("10").append(",").append("6").append(",").append("\n");
         assertThat(display.toString(), is(expected.toString()));
+        verify(statisticsFileWriter, times(1)).writeToFile(Mockito.any(StringBuilder.class));
+    }
+
+    @Test
+    public void shouldDisplayMultipleHostClusteringCustomersWhenMoreThanOneMaximum() throws Exception {
+
+        //given
+        doNothing().when(statisticsFileWriter).writeToFile(any(StringBuilder.class));
+
+        CloudInstance instanceOne = CloudInstance.from("1", "8", "2");
+        CloudInstance instanceTwo = CloudInstance.from("2", "8", "2");
+        CloudInstance instanceThree = CloudInstance.from("3", "8", "2");
+        CloudInstance instanceFour = CloudInstance.from("4", "8", "7");
+        CloudInstance instanceTwelve = CloudInstance.from("12", "8", "6");
+
+        CloudInstance instanceEight = CloudInstance.from("8", "9", "3");
+        CloudInstance instanceSix = CloudInstance.from("6", "9", "3");
+        CloudInstance instanceSeven = CloudInstance.from("7", "9", "3");
+        CloudInstance instanceFourteen = CloudInstance.from("14", "9", "9");
+        CloudInstance instanceFifteen = CloudInstance.from("15", "9", "7");
+        ;
+
+        Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));
+        Customer customerNine = Customer.from("9", Arrays.asList(instanceEight, instanceSix, instanceSeven, instanceFourteen, instanceFifteen));
+
+
+        List<Customer> customers = Arrays.asList(customerEight, customerNine);
+
+
+        Host hostTwo = Host.from("2", 4, "0", Arrays.asList(instanceOne, instanceTwo, instanceThree));
+        Host hostThree = Host.from("3", 3, "1", Arrays.asList(instanceEight, instanceSix, instanceSeven));
+        Host hostSeven = Host.from("7", 3, "0", Arrays.asList(instanceFour, instanceFifteen));
+        Host hostSix = Host.from("6", 3, "1", Collections.singletonList(instanceTwelve));
+        Host hostNine = Host.from("9", 3, "1", Collections.singletonList(instanceFourteen));
+
+
+        List<Host> hosts = Arrays.asList(hostTwo, hostSeven, hostNine, hostThree, hostSix);
+
+        CloudInfrastructureOutput output = new CloudInfrastructureOutput(customers, hosts, statisticsFileWriter);
+
+        //when
+        StringBuilder display = output.display();
+
+        //then
+        StringBuilder expected = new StringBuilder();
+        expected.append("HostClustering:").append("8").append(",").append(0.6).append("\n");
+        expected.append("HostClustering:").append("9").append(",").append(0.6).append("\n");
+        expected.append("DatacentreClustering:").append("9").append(",").append(0.8).append("\n")
+                .append("AvailableHosts:").append("2").append(",").append("7").append(",").append("9")
+                .append(",").append("6").append(",").append("\n");
+        assertEquals( expected.toString(), display.toString());
         verify(statisticsFileWriter, times(1)).writeToFile(Mockito.any(StringBuilder.class));
     }
 }
