@@ -58,4 +58,40 @@ public class HostClusteringStatisticsTest {
         assertThat(customerMaxFleetOnHost.size(), is(1));
         assertThat(customerMaxFleetOnHost, is(expected));
     }
+
+    @Test
+    public void shouldReturnMultipleEntriesWithSameMaximum() throws Exception {
+
+        //given
+        CloudInstance instanceOne = CloudInstance.from("1", "8", "2");
+        CloudInstance instanceTwo = CloudInstance.from("2", "8", "2");
+        CloudInstance instanceThree = CloudInstance.from("3", "8", "2");
+        CloudInstance instanceFour = CloudInstance.from("4", "8", "7");
+        CloudInstance instanceTwelve = CloudInstance.from("12", "8", "6");
+
+        CloudInstance instanceEight = CloudInstance.from("8", "9", "3");
+        CloudInstance instanceSix = CloudInstance.from("6", "9", "3");
+        CloudInstance instanceSeven = CloudInstance.from("7", "9", "3");
+        CloudInstance instanceFourteen = CloudInstance.from("14", "9", "9");
+        CloudInstance instanceFifteen = CloudInstance.from("15", "9", "7");
+        ;
+
+        Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));
+        Customer customerNine = Customer.from("9", Arrays.asList(instanceEight, instanceSix, instanceSeven, instanceFourteen, instanceFifteen));
+
+
+        List<Customer> customers = Arrays.asList(customerEight, customerNine);
+
+        HostClusteringStatistics hostClusteringStatistics = new HostClusteringStatistics(customers);
+
+        //when
+        Set<Map.Entry<Customer, Double>> customerMaxFleetOnHost = hostClusteringStatistics.customerMaximumOfFleetPerHost();
+
+        //then
+        Set<Map.Entry<Customer, Double>> expected = new HashSet<>();
+        expected.add(new AbstractMap.SimpleEntry<>(customerEight, 0.6));
+        expected.add(new AbstractMap.SimpleEntry<>(customerNine, 0.6));
+        assertThat(customerMaxFleetOnHost.size(), is(2));
+        assertThat(customerMaxFleetOnHost, is(expected));
+    }
 }
