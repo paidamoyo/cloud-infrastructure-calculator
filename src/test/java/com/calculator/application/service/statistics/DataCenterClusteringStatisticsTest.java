@@ -1,4 +1,4 @@
-package com.calculator.application.view;
+package com.calculator.application.service.statistics;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.calculator.application.service.statistics.DataCenterClusteringStatistics;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 import com.calculator.domain.Host;

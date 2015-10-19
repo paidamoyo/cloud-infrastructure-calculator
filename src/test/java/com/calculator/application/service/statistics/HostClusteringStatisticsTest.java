@@ -2,19 +2,19 @@ package com.calculator.application.service.statistics;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
-import com.calculator.application.service.CustomerBuilder;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
-public class CustomerBuilderTest {
+public class HostClusteringStatisticsTest {
 
     @Test
-    public void shouldGetCustomersFromCloudInstances() throws Exception {
+    public void shouldReturnAMapOfCustomerMaxNumberOfFleetPerHost() throws Exception {
 
         //given
         CloudInstance instanceOne = CloudInstance.from("1", "8", "2");
@@ -37,21 +37,20 @@ public class CustomerBuilderTest {
         CloudInstance instanceTen = CloudInstance.from("10", "16", "5");
         CloudInstance instanceThirteen = CloudInstance.from("13", "16", "8");
 
-        List<CloudInstance> cloudInstances = Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceFive, instanceSix, instanceSeven, instanceEight, instanceNine, instanceTen, instanceEleven, instanceTwelve, instanceThirteen, instanceFourteen, instanceFifteen);
+        Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));// 3/5
+        Customer customerNine = Customer.from("9", Arrays.asList(instanceEight, instanceFourteen, instanceFifteen));//1/3
+        Customer customerThirteen = Customer.from("13", Arrays.asList(instanceSeven, instanceNine));//1/2
+        Customer customerFifteen = Customer.from("15", Arrays.asList(instanceFive, instanceEleven)); //1/2
+        Customer customerSixteen = Customer.from("16", Arrays.asList(instanceSix, instanceTen, instanceThirteen));//1/3
 
-        CustomerBuilder customerBuilder = new CustomerBuilder(cloudInstances);
+        List<Customer> customers = Arrays.asList(customerThirteen, customerFifteen, customerSixteen, customerEight, customerNine);
+        HostClusteringStatistics hostClusteringStatistics = new HostClusteringStatistics(customers);
 
         //when
-        List<Customer> customers = customerBuilder.create();
+        Map.Entry<Customer, Double> customerMaxFleetOnHost = hostClusteringStatistics.customerMaximumOfFleetPerHost();
 
         //then
-        Customer customerEight = Customer.from("8", Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceTwelve));
-        Customer customerNine = Customer.from("9", Arrays.asList(instanceEight, instanceFourteen, instanceFifteen));
-        Customer customerThirteen = Customer.from("13", Arrays.asList(instanceSeven, instanceNine));
-        Customer customerFifteen = Customer.from("15", Arrays.asList(instanceFive, instanceEleven));
-        Customer customerSixteen = Customer.from("16", Arrays.asList(instanceSix, instanceTen, instanceThirteen));
-
-        assertThat(customers.size(), is(5));
-        assertThat(customers, is(Arrays.asList(customerThirteen, customerFifteen, customerSixteen, customerEight, customerNine)));
+        assertThat(customerMaxFleetOnHost.getKey(), is(customerEight));
+        assertThat(customerMaxFleetOnHost.getValue(), is(0.6));
     }
 }

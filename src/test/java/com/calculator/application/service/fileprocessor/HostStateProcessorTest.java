@@ -1,4 +1,4 @@
-package com.calculator.application.service.statistics;
+package com.calculator.application.service.fileprocessor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calculator.application.service.fileprocessor.HostStateProcessor;
-import com.calculator.application.service.fileprocessor.HostStateProcessorException;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Host;
 import static org.hamcrest.core.Is.is;
