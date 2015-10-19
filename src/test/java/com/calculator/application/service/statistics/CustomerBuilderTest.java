@@ -1,10 +1,11 @@
-package com.calculator.application.service;
+package com.calculator.application.service.statistics;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.calculator.application.service.CustomerBuilder;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 import static org.hamcrest.core.Is.is;

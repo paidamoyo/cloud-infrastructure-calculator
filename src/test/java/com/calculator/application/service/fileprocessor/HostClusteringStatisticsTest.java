@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.calculator.application.view.HostClustering;
+import com.calculator.application.service.statistics.HostClusteringStatistics;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class HostClusteringTest {
+public class HostClusteringStatisticsTest {
 
     @Test
     public void shouldReturnAMapOfCustomerMaxNumberOfFleetPerHost() throws Exception {
@@ -45,10 +45,10 @@ public class HostClusteringTest {
         Customer customerSixteen = Customer.from("16", Arrays.asList(instanceSix, instanceTen, instanceThirteen));//1/3
 
         List<Customer> customers = Arrays.asList(customerThirteen, customerFifteen, customerSixteen, customerEight, customerNine);
-        HostClustering hostClustering = new HostClustering(customers);
+        HostClusteringStatistics hostClusteringStatistics = new HostClusteringStatistics(customers);
 
         //when
-        Map.Entry<Customer, Double> customerMaxFleetOnHost = hostClustering.customerMaximumOfFleetPerHost();
+        Map.Entry<Customer, Double> customerMaxFleetOnHost = hostClusteringStatistics.customerMaximumOfFleetPerHost();
 
         //then
         assertThat(customerMaxFleetOnHost.getKey(), is(customerEight));

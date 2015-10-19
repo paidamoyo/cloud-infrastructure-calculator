@@ -1,4 +1,4 @@
-package com.calculator.application.service;
+package com.calculator.application.service.statistics;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

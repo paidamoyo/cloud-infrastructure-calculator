@@ -1,4 +1,4 @@
-package com.calculator.application.view;
+package com.calculator.application.service.statistics;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 
-public class HostClustering {
+public class HostClusteringStatistics {
 
     private List<Customer> customers;
 
-    public HostClustering(List<Customer> customers) {
+    public HostClusteringStatistics(List<Customer> customers) {
         this.customers = customers;
     }
 

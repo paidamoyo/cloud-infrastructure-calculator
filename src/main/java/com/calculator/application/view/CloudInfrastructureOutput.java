@@ -3,6 +3,8 @@ package com.calculator.application.view;
 import java.util.List;
 import java.util.Map;
 
+import com.calculator.application.service.statistics.DataCenterClusteringStatistics;
+import com.calculator.application.service.statistics.HostClusteringStatistics;
 import com.calculator.domain.Customer;
 import com.calculator.domain.Host;
 import com.google.common.collect.FluentIterable;
@@ -20,8 +22,8 @@ public class CloudInfrastructureOutput {
 
 
     public StringBuilder display() {
-        Map.Entry<Customer, Double> maximumOfFleetPerHost = new HostClustering(customers).customerMaximumOfFleetPerHost();
-        Map.Entry<Customer, Double> maximumOfFleetPerCenter = new DataCenterClustering(customers, hosts).customerMaximumOfFleetPerDataCenter();
+        Map.Entry<Customer, Double> maximumOfFleetPerHost = new HostClusteringStatistics(customers).customerMaximumOfFleetPerHost();
+        Map.Entry<Customer, Double> maximumOfFleetPerCenter = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
 
         final FluentIterable<Host> hostsWithEmptySlots = FluentIterable.from(hosts).filter(Host::hasEmptySlot);
 

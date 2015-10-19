@@ -7,13 +7,14 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.calculator.application.service.statistics.DataCenterClusteringStatistics;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
 import com.calculator.domain.Host;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class DataCenterClusteringTest {
+public class DataCenterClusteringStatisticsTest {
 
     @Test
     public void shouldCustomerMaximumOfFleetPerDataCenter() throws Exception {
@@ -57,7 +58,7 @@ public class DataCenterClusteringTest {
         List<Host> hosts = Arrays.asList(hostTwo, hostFive, hostSeven, hostNine, hostThree, hostTen, hostSix,
                 hostEight);
         //when
-        Map.Entry<Customer, Double> customerDoubleEntry = new DataCenterClustering(customers, hosts).customerMaximumOfFleetPerDataCenter();
+        Map.Entry<Customer, Double> customerDoubleEntry = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
 
         //then
         assertThat(customerDoubleEntry.getKey(), is(customerEight));

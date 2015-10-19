@@ -1,4 +1,4 @@
-package com.calculator.application.view;
+package com.calculator.application.service.statistics;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,12 +10,12 @@ import com.calculator.domain.Customer;
 import com.calculator.domain.Host;
 import com.google.common.collect.FluentIterable;
 
-public class DataCenterClustering {
+public class DataCenterClusteringStatistics {
 
     private List<Customer> customers;
     private List<Host> hosts;
 
-    public DataCenterClustering(List<Customer> customers, List<Host> hosts) {
+    public DataCenterClusteringStatistics(List<Customer> customers, List<Host> hosts) {
         this.customers = customers;
         this.hosts = hosts;
     }
