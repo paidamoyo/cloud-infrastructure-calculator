@@ -1,4 +1,4 @@
-package com.calculator.application.service.fileprocessor;
+package com.calculator.application.service.filereader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,7 +14,7 @@ import com.calculator.domain.Host;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class HostStateProcessorTest {
+public class HostStateReaderTest {
 
     private Path currentDirectory;
 
@@ -48,7 +48,7 @@ public class HostStateProcessorTest {
 
         List<CloudInstance> cloudInstances = Arrays.asList(instanceOne, instanceTwo, instanceThree, instanceFour, instanceFive, instanceSix, instanceSeven, instanceEight, instanceNine, instanceTen, instanceEleven, instanceTwelve, instanceThirteen, instanceFourteen, instanceFifteen);
 
-        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, cloudInstances);
+        HostStateReader hostStateProcessor = new HostStateReader(pathHostState, cloudInstances);
 
         //when
         List<Host> hosts = hostStateProcessor.process();
@@ -69,7 +69,7 @@ public class HostStateProcessorTest {
     }
 
 
-    @Test(expected = HostStateProcessorException.class)
+    @Test(expected = HostStateReaderException.class)
     public void shouldThrowExceptionIfHostStateFileIsInvalid() throws Exception {
 
         //given
@@ -77,13 +77,13 @@ public class HostStateProcessorTest {
 
         List<CloudInstance> cloudInstances = Collections.emptyList();
 
-        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, cloudInstances);
+        HostStateReader hostStateProcessor = new HostStateReader(pathHostState, cloudInstances);
 
         //when
         hostStateProcessor.process();
     }
 
-    @Test(expected = HostStateProcessorException.class)
+    @Test(expected = HostStateReaderException.class)
     public void shouldThrowExceptionIfHostStateFileIsNotFound() throws Exception {
 
         //given
@@ -91,7 +91,7 @@ public class HostStateProcessorTest {
 
         List<CloudInstance> cloudInstances = Collections.emptyList();
 
-        HostStateProcessor hostStateProcessor = new HostStateProcessor(pathHostState, cloudInstances);
+        HostStateReader hostStateProcessor = new HostStateReader(pathHostState, cloudInstances);
 
         //when
         hostStateProcessor.process();

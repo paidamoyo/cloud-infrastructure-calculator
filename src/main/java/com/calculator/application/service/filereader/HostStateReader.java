@@ -1,4 +1,4 @@
-package com.calculator.application.service.fileprocessor;
+package com.calculator.application.service.filereader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import com.calculator.domain.Host;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 
-public class HostStateProcessor implements FileProcessorBase {
+public class HostStateReader implements FileReaderBase {
 
     private static final String HOST_STATE_LINE_SEPARATOR = ",";
     private static final int HOST_LINE_LENGTH = 3;
@@ -18,7 +18,7 @@ public class HostStateProcessor implements FileProcessorBase {
     private Path path;
     private List<CloudInstance> cloudInstances;
 
-    public HostStateProcessor(Path path, List<CloudInstance> cloudInstances) {
+    public HostStateReader(Path path, List<CloudInstance> cloudInstances) {
         this.path = path;
         this.cloudInstances = cloudInstances;
     }
@@ -36,7 +36,7 @@ public class HostStateProcessor implements FileProcessorBase {
         } catch (IOException e) {
             String message = "error reading file: " + this.path + " ";
             System.out.println(message + e);
-            throw new HostStateProcessorException(message, e);
+            throw new HostStateReaderException(message, e);
 
         }
     }
@@ -49,7 +49,7 @@ public class HostStateProcessor implements FileProcessorBase {
         if (cloudHost.length != HOST_LINE_LENGTH
                 ) {
             String message = String.format("error in file: %s line: %s is not formatted correctly", path, line);
-            throw new HostStateProcessorException(message);
+            throw new HostStateReaderException(message);
         }
 
         String id = cloudHost[0];

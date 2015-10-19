@@ -4,8 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.calculator.application.service.CustomerBuilder;
-import com.calculator.application.service.fileprocessor.CloudInstanceStateProcessor;
-import com.calculator.application.service.fileprocessor.HostStateProcessor;
+import com.calculator.application.service.filereader.CloudInstanceStateReader;
+import com.calculator.application.service.filereader.HostStateReader;
 import com.calculator.application.view.CloudInfrastructureOutput;
 import com.calculator.domain.CloudInstance;
 import com.calculator.domain.Customer;
@@ -20,8 +20,8 @@ public class Main {
         Path pathInstanceState = Paths.get(args[0]);
         Path pathHostState = Paths.get(args[1]);
 
-        ImmutableList<CloudInstance> cloudInstances = new CloudInstanceStateProcessor(pathInstanceState).process();
-        ImmutableList<Host> hosts = new HostStateProcessor(pathHostState, cloudInstances).process();
+        ImmutableList<CloudInstance> cloudInstances = new CloudInstanceStateReader(pathInstanceState).process();
+        ImmutableList<Host> hosts = new HostStateReader(pathHostState, cloudInstances).process();
 
         ImmutableList<Customer> customers = new CustomerBuilder(cloudInstances).create();
         StringBuilder results = new CloudInfrastructureOutput(customers, hosts).display();

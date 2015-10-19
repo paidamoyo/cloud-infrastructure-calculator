@@ -1,4 +1,4 @@
-package com.calculator.application.service.fileprocessor;
+package com.calculator.application.service.filereader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,13 +8,13 @@ import com.calculator.domain.CloudInstance;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 
-public class CloudInstanceStateProcessor implements FileProcessorBase {
+public class CloudInstanceStateReader implements FileReaderBase {
 
     private static final String INSTANCE_STATE_LINE_SEPARATOR = ",";
     private static final int INSTANCE_LINE_LENGTH = 3;
     private Path path;
 
-    public CloudInstanceStateProcessor(Path path) {
+    public CloudInstanceStateReader(Path path) {
 
         this.path = path;
     }
@@ -32,7 +32,7 @@ public class CloudInstanceStateProcessor implements FileProcessorBase {
         } catch (IOException e) {
             String message = "error reading file: " + this.path + " ";
             System.out.println(message + e);
-            throw new CloudInstanceStateProcessorException(message, e);
+            throw new CloudInstanceStateReaderException(message, e);
 
         }
     }
@@ -45,7 +45,7 @@ public class CloudInstanceStateProcessor implements FileProcessorBase {
         if (cloudInstance.length != INSTANCE_LINE_LENGTH
                 ) {
             String message = String.format("error in file: %s line: %s is not formatted correctly", path, line);
-            throw new CloudInstanceStateProcessorException(message);
+            throw new CloudInstanceStateReaderException(message);
         }
 
         String id = cloudInstance[0];

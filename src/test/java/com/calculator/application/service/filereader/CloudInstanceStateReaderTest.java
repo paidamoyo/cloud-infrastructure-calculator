@@ -1,4 +1,4 @@
-package com.calculator.application.service.fileprocessor;
+package com.calculator.application.service.filereader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +12,7 @@ import com.calculator.domain.CloudInstance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CloudInstanceStateProcessorTest {
+public class CloudInstanceStateReaderTest {
 
     private Path currentDirectory;
 
@@ -28,7 +28,7 @@ public class CloudInstanceStateProcessorTest {
         //given
         Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InstanceState.txt", currentDirectory.toString()));
 
-        CloudInstanceStateProcessor processor = new CloudInstanceStateProcessor(pathInstateState);
+        CloudInstanceStateReader processor = new CloudInstanceStateReader(pathInstateState);
 
         //when
         List<CloudInstance> cloudInstances = processor.process();
@@ -53,13 +53,13 @@ public class CloudInstanceStateProcessorTest {
     }
 
 
-    @Test(expected = CloudInstanceStateProcessorException.class)
+    @Test(expected = CloudInstanceStateReaderException.class)
     public void shouldThrowExceptionIfFIleIsNotFormattedCorrectly() throws Exception {
 
         //given
         Path pathInstateState = Paths.get(String.format("%s/src/test/resources/InvalidInstanceState.txt", currentDirectory.toString()));
 
-        CloudInstanceStateProcessor processor = new CloudInstanceStateProcessor(pathInstateState);
+        CloudInstanceStateReader processor = new CloudInstanceStateReader(pathInstateState);
 
 
         //when
@@ -68,13 +68,13 @@ public class CloudInstanceStateProcessorTest {
         //then
     }
 
-    @Test(expected = CloudInstanceStateProcessorException.class)
+    @Test(expected = CloudInstanceStateReaderException.class)
     public void shouldThrowExceptionIfFIleIsNotFound() throws Exception {
 
         //given
         Path pathInstateState = Paths.get(String.format("%s/src/test/resources/NotExistingInstanceState.txt", currentDirectory.toString()));
 
-        CloudInstanceStateProcessor processor = new CloudInstanceStateProcessor(pathInstateState);
+        CloudInstanceStateReader processor = new CloudInstanceStateReader(pathInstateState);
 
 
         //when
