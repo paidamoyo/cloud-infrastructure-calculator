@@ -1,9 +1,8 @@
-
 apply plugin: 'idea'
 
 apply plugin: 'maven'
 
-apply plugin:'application'
+apply plugin: 'application'
 
 repositories {
     jcenter()
@@ -11,7 +10,7 @@ repositories {
 }
 
 run {
-    if ( project.hasProperty('filePaths') ) {
+    if (project.hasProperty('filePaths')) {
         args(filePaths.split(','))
     }
     mainClassName = 'com.calculator.application.Main'
@@ -20,6 +19,9 @@ run {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    testCompile("org.mockito:mockito-all:1.10.+") {
+        exclude group: 'org.hamcrest'
+    }
     compile 'org.projectlombok:lombok:1.16.+'
     compile 'com.google.guava:guava:18.0'
 }

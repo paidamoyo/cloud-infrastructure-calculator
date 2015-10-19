@@ -3,19 +3,21 @@ package com.statistics.application.view;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import com.statistics.application.service.statistics.DataCenterClusteringStatistics;
 import com.statistics.application.service.statistics.HostClusteringStatistics;
 import com.statistics.domain.Customer;
 import com.statistics.domain.Host;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
 
 public class CloudInfrastructureOutput {
 
     private ImmutableList<Customer> customers;
     private ImmutableList<Host> hosts;
+    private StatisticsFileWriter statisticsFileWriter;
 
-    public CloudInfrastructureOutput(List<Customer> customers, List<Host> hosts) {
+    public CloudInfrastructureOutput(List<Customer> customers, List<Host> hosts, StatisticsFileWriter statisticsFileWriter) {
+        this.statisticsFileWriter = statisticsFileWriter;
         this.customers = ImmutableList.copyOf(customers);
         this.hosts = ImmutableList.copyOf(hosts);
     }
@@ -36,6 +38,9 @@ public class CloudInfrastructureOutput {
 
         hostsWithEmptySlots.forEach(host -> result.append(host.getId()).append(","));
         result.append("\n");
+
+        statisticsFileWriter.writeToFile(result.toString());
         return result;
     }
+
 }

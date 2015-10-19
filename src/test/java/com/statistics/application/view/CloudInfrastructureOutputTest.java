@@ -4,20 +4,37 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import com.statistics.domain.CloudInstance;
 import com.statistics.domain.Customer;
 import com.statistics.domain.Host;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class CloudInfrastructureOutputTest {
+
+    @Mock
+    private StatisticsFileWriter statisticsFileWriter;
+
+    @Before
+    public void setUp() throws Exception {
+        initMocks(this);
+
+    }
 
     @Test
     public void shouldDisplayHostClustering() throws Exception {
 
         //given
+        Mockito.doNothing().when(statisticsFileWriter).writeToFile(any(String.class));
+
         CloudInstance instanceOne = CloudInstance.from("1", "8", "2");
         CloudInstance instanceTwo = CloudInstance.from("2", "8", "2");
         CloudInstance instanceThree = CloudInstance.from("3", "8", "2");
@@ -59,7 +76,7 @@ public class CloudInfrastructureOutputTest {
         List<Host> hosts = Arrays.asList(hostTwo, hostFive, hostSeven, hostNine, hostThree, hostTen, hostSix,
                 hostEight);
 
-        CloudInfrastructureOutput output = new CloudInfrastructureOutput(customers, hosts );
+        CloudInfrastructureOutput output = new CloudInfrastructureOutput(customers, hosts, statisticsFileWriter);
 
         //when
         StringBuilder display = output.display();
@@ -71,5 +88,6 @@ public class CloudInfrastructureOutputTest {
                 .append("AvailableHosts:").append("2").append(",").append("5").append(",")
                 .append("3").append(",").append("10").append(",").append("6").append(",").append("\n");
         assertThat(display.toString(), is(expected.toString()));
+        verify(statisticsFileWriter).writeToFile(expected.toString());
     }
 }
