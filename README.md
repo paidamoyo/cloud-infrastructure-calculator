@@ -1,4 +1,4 @@
-cloud-infrastructure-calculator
+cloud-infrastructure-statistics
 ===============================
 
 ## Tools setup (command instructions are for OSX)
