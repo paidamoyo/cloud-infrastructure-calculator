@@ -4,6 +4,7 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -99,13 +100,20 @@ public class DataCenterClusteringStatisticsTest {
                 hostEight);
         //when
         Collection<Map.Entry<Customer, Double>> customerDoubleEntry = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
-
+        System.out.print(customerDoubleEntry);
         //then
-        AbstractMap.SimpleEntry<Customer, Double> expected = new AbstractMap.SimpleEntry<>(customerFifteen, 0.33);
-        AbstractMap.SimpleEntry<Customer, Double> expectedTwo = new AbstractMap.SimpleEntry<>(customerSixteen, 0.33);
+        AbstractMap.SimpleEntry<Customer, Double> expectedOne = new AbstractMap.SimpleEntry<>(customerFifteen, 0.3333333333333333);
+        AbstractMap.SimpleEntry<Customer, Double> expectedTwo = new AbstractMap.SimpleEntry<>(customerSixteen, 0.3333333333333333);
+        final List<AbstractMap.SimpleEntry<Customer, Double>> expected = Arrays.asList(expectedOne, expectedTwo);
+
         assertEquals(2, customerDoubleEntry.size());
-        assertEquals(expected, customerDoubleEntry.iterator().next());
-        assertEquals(expectedTwo, customerDoubleEntry.iterator().next());
+        int count = 0;
+        Iterator<Map.Entry<Customer, Double>> iterator = customerDoubleEntry.iterator();
+        while (iterator.hasNext()) {
+            assertEquals(expected.get(count), iterator.next());
+            count ++;
+            iterator.next();
+        }
 
     }
 }

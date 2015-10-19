@@ -136,9 +136,10 @@ public class CloudInfrastructureOutputTest {
 
         //then
         StringBuilder expected = new StringBuilder();
-        expected.append("HostClustering:").append("8").append(",").append(0.6).append("\n");
-        expected.append("HostClustering:").append("9").append(",").append(0.6).append("\n");
-        expected.append("DatacentreClustering:").append("9").append(",").append(0.8).append("\n")
+        expected.append("HostClustering:").append("8").append(",").append(0.6).append("\n")
+                .append("HostClustering:").append("9").append(",").append(0.6).append("\n")
+                .append("DatacentreClustering:").append("8").append(",").append(0.8).append("\n")
+                .append("DatacentreClustering:").append("9").append(",").append(0.8).append("\n")
                 .append("AvailableHosts:").append("2").append(",").append("7").append(",").append("9")
                 .append(",").append("6").append(",").append("\n");
         assertEquals( expected.toString(), display.toString());

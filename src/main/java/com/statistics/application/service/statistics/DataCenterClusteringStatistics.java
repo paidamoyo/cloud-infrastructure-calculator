@@ -75,14 +75,21 @@ public class DataCenterClusteringStatistics {
 
     private Map<Customer, Integer> findCustomerMaxFleetMap(Map<Customer, Map<String, Integer>> dataCenterClustering) {
         Map<Customer, Integer> customerMaxFleetMap = new HashMap<>();
-        dataCenterClustering.entrySet().forEach(customerMapEntry -> {
-            final Integer maxNumberOfInstances = customerMapEntry
-                    .getValue()
-                    .entrySet()
-                    .stream()
-                    .max((entryOne, entryTwo) -> entryOne.getValue().compareTo(entryTwo.getValue())).get().getValue();
-            customerMaxFleetMap.put(customerMapEntry.getKey(), maxNumberOfInstances);
-        });
+
+        dataCenterClustering.entrySet().forEach(
+                customerMapEntry ->
+                {
+                    final Integer maxNumberOfInstancesInADataCenter = customerMapEntry
+                            .getValue()
+                            .entrySet()
+                            .stream()
+                            .max((entryOne, entryTwo) -> entryOne.getValue().compareTo(entryTwo.getValue()))
+                            .get()
+                            .getValue();
+
+                    customerMaxFleetMap.put(customerMapEntry.getKey(), maxNumberOfInstancesInADataCenter);
+                });
+
         return customerMaxFleetMap;
     }
 
