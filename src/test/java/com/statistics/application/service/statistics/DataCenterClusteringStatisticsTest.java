@@ -1,6 +1,8 @@
 package com.statistics.application.service.statistics;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +12,7 @@ import org.junit.Test;
 import com.statistics.domain.CloudInstance;
 import com.statistics.domain.Customer;
 import com.statistics.domain.Host;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class DataCenterClusteringStatisticsTest {
 
@@ -57,10 +58,54 @@ public class DataCenterClusteringStatisticsTest {
         List<Host> hosts = Arrays.asList(hostTwo, hostFive, hostSeven, hostNine, hostThree, hostTen, hostSix,
                 hostEight);
         //when
-        Map.Entry<Customer, Double> customerDoubleEntry = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
+        Collection<Map.Entry<Customer, Double>> customerDoubleEntry = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
 
         //then
-        assertThat(customerDoubleEntry.getKey(), is(customerEight));
-        assertThat(customerDoubleEntry.getValue(), is(0.8));
+        AbstractMap.SimpleEntry<Customer, Double> expected = new AbstractMap.SimpleEntry<>(customerEight, 0.8);
+        assertEquals(1, customerDoubleEntry.size());
+        assertEquals(expected, customerDoubleEntry.iterator().next());
+
+    }
+
+
+    @Test
+    public void shouldReturnAllCustomerMaximumOfFleetPerDataCenter() throws Exception {
+
+        //given
+
+        CloudInstance instanceFive = CloudInstance.from("5", "15", "7");
+        CloudInstance instanceEleven = CloudInstance.from("11", "15", "8");
+        CloudInstance instanceOne = CloudInstance.from("1", "15", "9");
+
+        CloudInstance instanceSix = CloudInstance.from("6", "16", "9");
+        CloudInstance instanceTen = CloudInstance.from("10", "16", "5");
+        CloudInstance instanceThirteen = CloudInstance.from("13", "16", "8");
+
+
+        Customer customerFifteen = Customer.from("15", Arrays.asList(instanceFive, instanceEleven, instanceOne)); //1/3
+        Customer customerSixteen = Customer.from("16", Arrays.asList(instanceSix, instanceTen, instanceThirteen)); //1/3
+
+        List<Customer> customers = Arrays.asList(customerFifteen, customerSixteen);
+
+        Host hostFive = Host.from("5", 4, "0", Collections.singletonList(instanceTen));
+        Host hostSeven = Host.from("7", 3, "0", Collections.singletonList(instanceFive));
+        Host hostNine = Host.from("9", 3, "1", Arrays.asList(instanceSix, instanceOne));
+        Host hostThree = Host.from("3", 3, "1", Collections.emptyList());
+        Host hostTen = Host.from("10", 2, "2", Collections.emptyList());
+        Host hostSix = Host.from("6", 4, "2", Collections.emptyList());
+        Host hostEight = Host.from("8", 2, "2", Arrays.asList(instanceEleven, instanceThirteen));
+
+        List<Host> hosts = Arrays.asList(hostFive, hostSeven, hostNine, hostThree, hostTen, hostSix,
+                hostEight);
+        //when
+        Collection<Map.Entry<Customer, Double>> customerDoubleEntry = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
+
+        //then
+        AbstractMap.SimpleEntry<Customer, Double> expected = new AbstractMap.SimpleEntry<>(customerFifteen, 0.33);
+        AbstractMap.SimpleEntry<Customer, Double> expectedTwo = new AbstractMap.SimpleEntry<>(customerSixteen, 0.33);
+        assertEquals(2, customerDoubleEntry.size());
+        assertEquals(expected, customerDoubleEntry.iterator().next());
+        assertEquals(expectedTwo, customerDoubleEntry.iterator().next());
+
     }
 }

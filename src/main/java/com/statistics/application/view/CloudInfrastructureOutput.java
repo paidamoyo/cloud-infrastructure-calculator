@@ -1,5 +1,6 @@
 package com.statistics.application.view;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class CloudInfrastructureOutput {
     public StringBuilder display() {
         Set<Map.Entry<Customer, Double>> maximumOfFleetPerHost = new HostClusteringStatistics(customers).customerMaximumOfFleetPerHost();
 
-        Map.Entry<Customer, Double> maximumOfFleetPerCenter = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
+        Collection<Map.Entry<Customer, Double>> maximumOfFleetPerCenter = new DataCenterClusteringStatistics(customers, hosts).customerMaximumOfFleetPerDataCenter();
 
         final FluentIterable<Host> hostsWithEmptySlots = FluentIterable.from(hosts).filter(Host::hasEmptySlot);
 
@@ -47,10 +48,12 @@ public class CloudInfrastructureOutput {
         hostsWithEmptySlots.forEach(host -> result.append(host.getId()).append(","));
     }
 
-    private void appendDataClusterStatistics(Map.Entry<Customer, Double> maximumOfFleetPerCenter, StringBuilder result) {
-        result.append("DatacentreClustering:")
-                .append(maximumOfFleetPerCenter.getKey().getId()).append(",")
-                .append(maximumOfFleetPerCenter.getValue()).append("\n");
+    private void appendDataClusterStatistics(Collection<Map.Entry<Customer, Double>> maximumOfFleetPerCenter, StringBuilder result) {
+        maximumOfFleetPerCenter.forEach(customerDoubleEntry ->
+                result.append("DatacentreClustering:")
+                        .append(customerDoubleEntry.getKey().getId()).append(",")
+                        .append(customerDoubleEntry.getValue()).append("\n"));
+
     }
 
     private void appendHostClusterStatistics(Set<Map.Entry<Customer, Double>> maximumOfFleetPerHost, StringBuilder result) {
